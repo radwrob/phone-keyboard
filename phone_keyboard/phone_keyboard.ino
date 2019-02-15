@@ -50,9 +50,6 @@
 #define SIG_11 12
 #define SIG_14 13
 
-bool is_pressed = false;
-int btn_value;
-
 void setup() {
   Serial.begin(9600);
   pinMode(SIG_3, OUTPUT);
@@ -70,13 +67,10 @@ void setup() {
 }
 
 void loop() {
-  btn_value = checkKey(SIG_4);
-  if(btn_value != -1){
-    is_pressed = true;
-  }
-  btn_value = checkKey(SIG_3);
-  btn_value = checkKey(SIG_14);
-  btn_value = checkKey(SIG_10);
+	keyDetect(SIG_4);
+	keyDetect(SIG_3);
+	keyDetect(SIG_14);
+	keyDetect(SIG_10);
 }
 
 int keyDecode(int a, int b){
@@ -125,6 +119,21 @@ int checkKey(int a){
   }
   digitalWrite(a, HIGH);
   return value;    
+}
+
+void keyDetect(int a){
+	bool is_pressed = false;
+	int btn_value;
+	
+	do{
+	  if(btn_value == checkKey(a))
+		is_pressed = true;				
+	  else
+	  	is_pressed = false;
+	  delay(10);	
+	}while(is_pressed);
+  
+  Serial.println(btn_value);
 }
 
 
