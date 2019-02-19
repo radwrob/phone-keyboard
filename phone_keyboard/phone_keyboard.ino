@@ -123,17 +123,22 @@ int checkKey(int a){
 
 void keyDetect(int a){
 	bool is_pressed = false;
-	int btn_value;
+	int btn_value = -1;
 	
 	do{
-	  if(btn_value == checkKey(a))
-		is_pressed = true;				
-	  else
+    btn_value = checkKey(a);       
+	  if((btn_value != -1) && (is_pressed == false)){
+		  is_pressed = true;
+      Serial.println(btn_value);			
+	  }
+    else if(btn_value != -1){
+      is_pressed = true;      
+    }   
+	  else{
 	  	is_pressed = false;
-	  delay(10);	
-	}while(is_pressed);
-  
-  Serial.println(btn_value);
+	  }
+    delay(10);
+	}while(is_pressed);  
 }
 
 
